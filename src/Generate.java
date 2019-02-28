@@ -157,7 +157,7 @@ public class Generate extends Application {
         image.setBrightness(Float.parseFloat(startBrightness.getText()), Float.parseFloat(endBrightness.getText()));
         image.setOffset(Integer.parseInt(xOffset.getText()), Integer.parseInt(yOffset.getText()));
         image.setBrush(brushChoice.getValue().toString());
-        // image.setBackground(Color.WHITE);
+        // image.setBackground(Color.WHITE); TODO: Implement setting background color
         image.randomize();
 
         try {

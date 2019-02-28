@@ -25,8 +25,8 @@ class RandomImage extends BufferedImage {
 
   private BufferedImage brush;
 
-  public RandomImage(int height, int width) {
-    super(height, width, BufferedImage.TYPE_INT_RGB);
+  public RandomImage(int width, int height) {
+    super(width, height, BufferedImage.TYPE_INT_RGB);
   }
 
   public void setBrush(String filename) {

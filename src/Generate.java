@@ -49,12 +49,12 @@ public class Generate extends Application {
 		TextField heightText = new TextField();
 		Label filenameLabel = new Label("filename: ");
 		TextField filenameText = new TextField();
-		ChoiceBox extensionChoice = new ChoiceBox();
+		ChoiceBox<String> extensionChoice = new ChoiceBox<>();
 
 		Label xLabel = new Label("x function: ");
-		ChoiceBox xChoice = new ChoiceBox();
+		ChoiceBox<String> xChoice = new ChoiceBox<>();
 		Label yLabel = new Label("y function: ");
-		ChoiceBox yChoice = new ChoiceBox();
+		ChoiceBox<String> yChoice = new ChoiceBox<>();
 		Label hueLabel = new Label("hue range: ");
 		TextField startHue = new TextField();
 		TextField endHue = new TextField();
@@ -69,7 +69,7 @@ public class Generate extends Application {
 		TextField yOffset = new TextField();
 
 		Label brushLabel = new Label("brush: ");
-		ChoiceBox brushChoice = new ChoiceBox();
+		ChoiceBox<String> brushChoice = new ChoiceBox<>();
 
 		Button button = new Button("Generate!");
 
@@ -150,13 +150,13 @@ public class Generate extends Application {
 			File output = new File("img/" + filename);
 			RandomImage image = new RandomImage(width, height);
 
-			image.setXFunction(xChoice.getValue().toString());
-			image.setYFunction(yChoice.getValue().toString());
+			image.setXFunction(xChoice.getValue());
+			image.setYFunction(yChoice.getValue());
 			image.setHue(Float.parseFloat(startHue.getText()), Float.parseFloat(endHue.getText()));
 			image.setSaturation(Float.parseFloat(startSaturation.getText()), Float.parseFloat(endSaturation.getText()));
 			image.setBrightness(Float.parseFloat(startBrightness.getText()), Float.parseFloat(endBrightness.getText()));
 			image.setOffset(Integer.parseInt(xOffset.getText()), Integer.parseInt(yOffset.getText()));
-			image.setBrush(brushChoice.getValue().toString());
+			image.setBrush(brushChoice.getValue());
 			// image.setBackground(Color.WHITE); TODO: Implement setting background color
 			image.randomize();
 

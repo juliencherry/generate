@@ -122,11 +122,6 @@ class RandomImage extends BufferedImage {
     float s[] = {startSaturation, endSaturation};
     float b[] = {startBrightness, endBrightness};
     return getRandomColor(h, s, b);
-
-    /*float r = rand.nextFloat();
-    float g = rand.nextFloat();
-    float b = rand.nextFloat();
-    return new Color(r, g, b);*/
   }
 
     static Color getRandomColor(float h[], float s[], float b[]) {

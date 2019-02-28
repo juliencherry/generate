@@ -9,8 +9,6 @@ import javax.imageio.ImageIO;
 
 
 class RandomImage extends BufferedImage {
-  private Color randomColor;
-
   private Function<Integer, Integer> xFunction;
   private Function<Integer, Integer> yFunction;
   private int xOffset;

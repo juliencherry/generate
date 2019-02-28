@@ -7,7 +7,6 @@ import java.util.stream.Stream;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -141,9 +140,8 @@ public class Generate extends Application {
 
     grid.add(button, 1, 11);
 
-    button.setOnAction(new EventHandler<ActionEvent>() {
-      @Override
-      public void handle(ActionEvent ae) {
+    button.setOnAction((ActionEvent ae) -> {
+
         width = Integer.parseInt("" + widthText.getCharacters());
         height = Integer.parseInt("" + heightText.getCharacters());
         extension = "" + extensionChoice.getValue();
@@ -180,7 +178,6 @@ public class Generate extends Application {
         } catch (IOException ex) {
           // Do nothing. :(
         }
-      }
     });
 
     Scene mainScene = new Scene(grid, 512, 512);

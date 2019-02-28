@@ -155,13 +155,12 @@ class RandomImage extends BufferedImage {
           int green = color.getGreen();
           int blue = color.getBlue();
           int alpha = (this.brush.getRGB(i, j)>>24) & 0xff;
-          Color pixelColor = new Color(red, green, blue, alpha); // todo: alpha not working?!
+          Color pixelColor = new Color(red, green, blue, alpha); // FIXME: Alpha not working
 
           try {
-            if (alpha == 255) { // temporary fix for above todo
+            if (alpha == 255) { // TODO: Temporary fix for the above
               this.setRGB(x + (i - xCenter), y + (j - yCenter), pixelColor.getRGB());
             }
-
           } catch (ArrayIndexOutOfBoundsException ex) {
             // do nothing
           }

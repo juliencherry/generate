@@ -9,10 +9,10 @@ import javax.imageio.ImageIO;
 
 
 class RandomImage extends BufferedImage {
+  private BufferedImage brush;
+
   private Function<Integer, Integer> xFunction;
   private Function<Integer, Integer> yFunction;
-  private int xOffset;
-  private int yOffset;
 
   private float startHue;
   private float endHue;
@@ -21,7 +21,8 @@ class RandomImage extends BufferedImage {
   private float startBrightness;
   private float endBrightness;
 
-  private BufferedImage brush;
+  private int xOffset;
+  private int yOffset;
 
   public RandomImage(int width, int height) {
     super(width, height, BufferedImage.TYPE_INT_RGB);
@@ -43,11 +44,6 @@ class RandomImage extends BufferedImage {
     this.yFunction = findFilter(filter);
   }
 
-  public void setOffset(int x, int y) {
-    this.xOffset = x;
-    this.yOffset = y;
-  }
-
   public void setHue(float startHue, float endHue) {
     this.startHue = startHue;
     this.endHue = endHue;
@@ -61,6 +57,11 @@ class RandomImage extends BufferedImage {
   public void setBrightness(float startBrightness, float endBrightness) {
     this.startBrightness = startBrightness;
     this.endBrightness = endBrightness;
+  }
+
+  public void setOffset(int x, int y) {
+    this.xOffset = x;
+    this.yOffset = y;
   }
 
   private Function<Integer, Integer> findFilter(String filter) {
@@ -92,15 +93,6 @@ class RandomImage extends BufferedImage {
     }
   }
 
-  // TODO: Implement setting background color
-  public void setBackground(Color color) {
-    for (int x = 0; x < getWidth(); x++) {
-      for (int y = 0; y < getHeight(); y++) {
-        this.setRGB(x, y, color.getRGB());
-      }
-    }
-  }
-
   public void randomize() {
     for (int x = 0; x < getWidth(); x++) {
       for (int y = 0; y < getHeight(); y++) {
@@ -112,30 +104,6 @@ class RandomImage extends BufferedImage {
       }
     }
   }
-
-  private Color getRandomColor() {
-    float h[] = {startHue, endHue};
-    float s[] = {startSaturation, endSaturation};
-    float b[] = {startBrightness, endBrightness};
-    return getRandomColor(h, s, b);
-  }
-
-    static Color getRandomColor(float h[], float s[], float b[]) {
-      Random r = new Random();
-
-      h[0] /= 360;
-      h[1] /= 360;
-      s[0] /= 100;
-      s[1] /= 100;
-      b[0] /= 100;
-      b[1] /= 100;
-
-      float hue = h[0] + r.nextFloat() * (h[1] - h[0]);
-      float saturation = s[0] + r.nextFloat() * (s[1] - s[0]);
-      float brightness = b[0] + r.nextFloat() * (b[1] - b[0]);
-
-      return Color.getHSBColor(hue, saturation, brightness);
-    }
 
     private void drawAtPoint(int x, int y, Color color) {
       int brushWidth = this.brush.getWidth();
@@ -163,4 +131,37 @@ class RandomImage extends BufferedImage {
         }
       }
     }
+
+  private Color getRandomColor() {
+    float h[] = {startHue, endHue};
+    float s[] = {startSaturation, endSaturation};
+    float b[] = {startBrightness, endBrightness};
+    return getRandomColor(h, s, b);
+  }
+
+  static Color getRandomColor(float h[], float s[], float b[]) {
+    Random r = new Random();
+
+    h[0] /= 360;
+    h[1] /= 360;
+    s[0] /= 100;
+    s[1] /= 100;
+    b[0] /= 100;
+    b[1] /= 100;
+
+    float hue = h[0] + r.nextFloat() * (h[1] - h[0]);
+    float saturation = s[0] + r.nextFloat() * (s[1] - s[0]);
+    float brightness = b[0] + r.nextFloat() * (b[1] - b[0]);
+
+    return Color.getHSBColor(hue, saturation, brightness);
+  }
+
+  // TODO: Implement setting background color
+  public void setBackground(Color color) {
+    for (int x = 0; x < getWidth(); x++) {
+      for (int y = 0; y < getHeight(); y++) {
+        this.setRGB(x, y, color.getRGB());
+      }
+    }
+  }
 }

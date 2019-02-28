@@ -94,7 +94,7 @@ public class Generate extends Application {
         }
       });
     } catch (Exception e) {
-
+		// do nothing :(
     }
 
     startHue.setText("0");
@@ -176,7 +176,7 @@ public class Generate extends Application {
           imageStage.setScene(imageScene);
           imageStage.show();
         } catch (IOException ex) {
-          // Do nothing. :(
+          // do nothing :(
         }
     });
 

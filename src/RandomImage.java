@@ -31,7 +31,7 @@ class RandomImage extends BufferedImage {
     try {
       brush = ImageIO.read(new File("brush/" + filename));
     } catch (IOException ex) {
-      // Do nothing. :(
+      // do nothing :(
     }
   }
 
@@ -162,7 +162,7 @@ class RandomImage extends BufferedImage {
               this.setRGB(x + (i - xCenter), y + (j - yCenter), pixelColor.getRGB());
             }
           } catch (ArrayIndexOutOfBoundsException ex) {
-            // do nothing
+            // do nothing :(
           }
         }
       }

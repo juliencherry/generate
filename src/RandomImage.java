@@ -86,15 +86,10 @@ class RandomImage extends BufferedImage {
       case "random":
         return x -> (int)(Math.random() * getHeight());
       case "custom":
-        // return x -> (int)(Math.random() * getHeight() * Math.sin(x));
         return x -> (x % 7 == 0) ? x : -1;
       default:
         return x -> x;
     }
-  }
-
-  private double toRadians(int point) {
-    return 0.0;
   }
 
   // TODO: Implement setting background color

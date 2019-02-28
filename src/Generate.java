@@ -22,11 +22,11 @@ import javafx.stage.Stage;
 import javax.imageio.ImageIO;
 
 public class Generate extends Application {
-	static int width = 0;
-	static int height = 0;
-	static String extension = "";
-	static String filename = "";
-	static ImageView imageView = new ImageView();
+	private static int width = 0;
+	private static int height = 0;
+	private static String extension = "";
+	private static String filename = "";
+	private static ImageView imageView = new ImageView();
 
 	public static void main(String[] args) {
 		launch(args);

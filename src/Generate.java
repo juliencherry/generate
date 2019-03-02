@@ -64,6 +64,9 @@ public class Generate extends Application {
 		Label brightnessLabel = new Label("brightness range: ");
 		TextField startBrightness = new TextField();
 		TextField endBrightness = new TextField();
+		Label opacityLabel = new Label("opacity range: ");
+		TextField startOpacity = new TextField();
+		TextField endOpacity = new TextField();
 		Label offset = new Label("offset (x, y): ");
 		TextField xOffset = new TextField();
 		TextField yOffset = new TextField();
@@ -106,6 +109,9 @@ public class Generate extends Application {
 		startBrightness.setText("0");
 		endBrightness.setText("100");
 
+		startOpacity.setText("100");
+		endOpacity.setText("100");
+
 		xOffset.setText("0");
 		yOffset.setText("0");
 
@@ -131,14 +137,17 @@ public class Generate extends Application {
 		grid.add(brightnessLabel, 0, 8);
 		grid.add(startBrightness, 1, 8);
 		grid.add(endBrightness, 2, 8);
-		grid.add(offset, 0, 9);
-		grid.add(xOffset, 1, 9);
-		grid.add(yOffset, 2, 9);
+		grid.add(opacityLabel, 0, 9);
+		grid.add(startOpacity, 1, 9);
+		grid.add(endOpacity, 2, 9);
+		grid.add(offset, 0, 10);
+		grid.add(xOffset, 1, 10);
+		grid.add(yOffset, 2, 10);
 
-		grid.add(brushLabel, 0, 10);
-		grid.add(brushChoice, 1, 10);
+		grid.add(brushLabel, 0, 11);
+		grid.add(brushChoice, 1, 11);
 
-		grid.add(button, 1, 11);
+		grid.add(button, 1, 12);
 
 		button.setOnAction((ActionEvent ae) -> {
 
@@ -155,6 +164,7 @@ public class Generate extends Application {
 			image.setHue(Float.parseFloat(startHue.getText()), Float.parseFloat(endHue.getText()));
 			image.setSaturation(Float.parseFloat(startSaturation.getText()), Float.parseFloat(endSaturation.getText()));
 			image.setBrightness(Float.parseFloat(startBrightness.getText()), Float.parseFloat(endBrightness.getText()));
+			image.setOpacity(Float.parseFloat(startOpacity.getText()), Float.parseFloat(endOpacity.getText()));
 			image.setOffset(Integer.parseInt(xOffset.getText()), Integer.parseInt(yOffset.getText()));
 			image.setBrush(brushChoice.getValue());
 			// image.setBackground(Color.WHITE); TODO: Implement setting background color

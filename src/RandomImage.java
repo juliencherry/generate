@@ -20,6 +20,8 @@ class RandomImage extends BufferedImage {
 	private float endSaturation;
 	private float startBrightness;
 	private float endBrightness;
+	private float startOpacity;
+	private float endOpacity;
 
 	private int xOffset;
 	private int yOffset;
@@ -57,6 +59,11 @@ class RandomImage extends BufferedImage {
 	public void setBrightness(float startBrightness, float endBrightness) {
 		this.startBrightness = startBrightness;
 		this.endBrightness = endBrightness;
+	}
+
+	public void setOpacity(float startOpacity, float endOpacity) {
+		this.startOpacity = startOpacity;
+		this.endOpacity = endOpacity;
 	}
 
 	public void setOffset(int x, int y) {
@@ -115,16 +122,22 @@ class RandomImage extends BufferedImage {
 		for (int i = 0; i < brushWidth; i++) {
 			for (int j = 0; j < brushHeight; j++) {
 
+				int relativeX = x + (i - xCenter);
+				int relativeY = y + (j - yCenter);
+
 				int red = color.getRed();
 				int green = color.getGreen();
 				int blue = color.getBlue();
 				int alpha = (this.brush.getRGB(i, j)>>24) & 0xff;
-				Color pixelColor = new Color(red, green, blue, alpha); // FIXME: Alpha not working
+
+				alpha = (int)(255 * (alpha / 255.0) * (color.getAlpha() / 255.0));
 
 				try {
-					if (alpha == 255) { // TODO: Temporary fix for the above
-						this.setRGB(x + (i - xCenter), y + (j - yCenter), pixelColor.getRGB());
-					}
+					Color pixelColor = new Color(red, green, blue, alpha);
+					Color existingColor = new Color(this.getRGB(relativeX, relativeY));
+					Color newColor = blend(pixelColor, existingColor);
+
+					this.setRGB(relativeX, relativeY, newColor.getRGB());
 				} catch (ArrayIndexOutOfBoundsException ex) {
 					// do nothing :(
 				}
@@ -132,14 +145,28 @@ class RandomImage extends BufferedImage {
 		}
 	}
 
+	static Color blend(Color above, Color below) {
+		double alpha = above.getAlpha() / 255.0;
+		int red = mix(above.getRed(), below.getRed(), alpha);
+		int green = mix(above.getGreen(), below.getGreen(), alpha);
+		int blue = mix(above.getBlue(), below.getBlue(), alpha);
+
+		return new Color(red, green, blue);
+	}
+
+	static int mix(int topComponent, int bottomComponent, double opacity) {
+		return (int)(topComponent * opacity + bottomComponent * (1 - opacity));
+	}
+
 	private Color getRandomColor() {
 		float h[] = {startHue, endHue};
 		float s[] = {startSaturation, endSaturation};
 		float b[] = {startBrightness, endBrightness};
-		return getRandomColor(h, s, b);
+		float a[] = {startOpacity, endOpacity};
+		return getRandomColor(h, s, b, a);
 	}
 
-	static Color getRandomColor(float h[], float s[], float b[]) {
+	static Color getRandomColor(float h[], float s[], float b[], float a[]) {
 		Random r = new Random();
 
 		h[0] /= 360;
@@ -148,12 +175,21 @@ class RandomImage extends BufferedImage {
 		s[1] /= 100;
 		b[0] /= 100;
 		b[1] /= 100;
+		a[0] /= 100;
+		a[1] /= 100;
 
 		float hue = h[0] + r.nextFloat() * (h[1] - h[0]);
 		float saturation = s[0] + r.nextFloat() * (s[1] - s[0]);
 		float brightness = b[0] + r.nextFloat() * (b[1] - b[0]);
+		float alpha = a[0] + r.nextFloat() * (a[1] - a[0]);
 
-		return Color.getHSBColor(hue, saturation, brightness);
+		Color hsbColor = Color.getHSBColor(hue, saturation, brightness);
+
+		int red = hsbColor.getRed();
+		int green = hsbColor.getGreen();
+		int blue = hsbColor.getBlue();
+
+		return new Color(red, green, blue, (int)(alpha * 255.0));
 	}
 
 	// TODO: Implement setting background color
